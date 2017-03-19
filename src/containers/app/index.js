@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import SearchBar from '../../components/SearchBar';
 import BookListAppTitle from '../../components/BookListAppTitle';
 import './styles.css';
 
@@ -33,7 +34,6 @@ class App extends Component {
 	}
 	search = (event) => {
 		let query = event.target.value.toLowerCase().trim();
-		console.log(query);
 		this.setState({
 			showBooks: this.books
 				.filter(({title, author}) =>
@@ -45,11 +45,10 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-				<form onSubmit={this.preventFormDefault}>
-					<label>Search: </label>
-					<input type="text" onChange={this.search} />
-					<button>Submit</button>
-				</form>
+				<SearchBar
+					preventFormDefault={this.preventFormDefault}
+					search={this.search}
+				/>
 				{this.state.showBooks.map(({id, title, author}) => (
 					<BookListAppTitle
 						key={id}
