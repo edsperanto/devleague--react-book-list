@@ -24,19 +24,37 @@ class App extends Component {
 				author: 'Harlan Ellison'
 			}
 		];
+		this.state = {
+			showBooks: this.books
+		};
 	}
-	doClick = () => {
-		console.log(this.title);
+	preventFormDefault(event) {
+		event.preventDefault();
+	}
+	search = (event) => {
+		let query = event.target.value.toLowerCase().trim();
+		console.log(query);
+		this.setState({
+			showBooks: this.books
+				.filter(({title, author}) =>
+					title.toLowerCase().indexOf(query) > -1 ||
+					author.toLowerCase().indexOf(query) > -1
+				)
+		});
 	}
   render() {
     return (
       <div className="App">
-				{this.books.map(({id, title, author}) => (
+				<form onSubmit={this.preventFormDefault}>
+					<label>Search: </label>
+					<input type="text" onChange={this.search} />
+					<button>Submit</button>
+				</form>
+				{this.state.showBooks.map(({id, title, author}) => (
 					<BookListAppTitle
 						key={id}
 						title={title}
 						author={author}
-						doClick={this.doClick}
 					/>
 				))}
       </div>
