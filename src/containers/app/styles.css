@@ -25,21 +25,15 @@ tbody, tr, td {
 }
 
 .form-content {
-	display: flex;
 	margin-top: 1rem;
-}
-
-label {
-	margin-left: 1rem;
+	width: 100%;
 }
 
 input {
 	font-size: 2rem;
 	height: 2rem;
 	line-height: 2rem;
-	flex-grow: 1;
-	margin-right: 1rem;
-	margin-left: 2rem;
+	width: 100%;
 }
 
 button {
@@ -48,6 +42,7 @@ button {
 	background-color: #2f2f2f;
 	color: white;
 	border-width: 0px;
+	padding: 0px;
 }
 
 .entries {
@@ -58,4 +53,25 @@ button {
 	background-color: darkorange;
 	border: 0px solid #2f2f2f;
 	border-bottom-width: 2px;
+}
+
+.form-row {
+	width: 100%;
+	display: flex;
+	flex-flow: row wrap;
+	margin-top: 1rem;
+}
+
+.form-label {
+	width: 9rem;
+}
+
+.form-input {
+	flex-grow: 1;
+}
+
+.form-submit {
+	width: 100%;
+	display: flex;
+	justify-content: flex-end;
 }
