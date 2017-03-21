@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import AddBooks from '../../components/AddBooks';
 import SearchBar from '../../components/SearchBar';
 import BookListAppTitle from '../../components/BookListAppTitle';
 import './styles.css';
@@ -26,14 +27,19 @@ class App extends Component {
 			}
 		];
 		this.state = {
-			showBooks: this.books
+			showBooks: this.books,
+			addBooks: true,
+			titleQuery: '',
+			authorQuery: ''
 		};
 	}
 	preventFormDefault(event) {
 		event.preventDefault();
 	}
 	search = (event) => {
-		let query = event.target.value.toLowerCase().trim();
+		let query = '';
+		if(event)
+			query = event.target.value.toLowerCase().trim();
 		this.setState({
 			showBooks: this.books
 				.filter(({title, author}) =>
@@ -42,13 +48,50 @@ class App extends Component {
 				)
 		});
 	}
+	updateTitle = (event) => {
+		let title = event.target.value.trim();
+		this.setState({
+			titleQuery: title
+		});
+	}
+	updateAuthor = (event) => {
+		let author = event.target.value.trim();
+		this.setState({
+			authorQuery: author
+		});
+	}
+	submitAddForm = (event) => {
+		event.preventDefault();
+		this.books.push({
+			id: ++this.count,
+			title: this.state.titleQuery,
+			author: this.state.authorQuery
+		});
+		this.search();
+	}
+	switchBar = (event) => {
+		event.preventDefault();
+		this.setState({
+			addBooks: !this.state.addBooks
+		});
+	}
   render() {
     return (
       <div className="App">
-				<SearchBar
-					preventFormDefault={this.preventFormDefault}
-					search={this.search}
-				/>
+				{this.state.addBooks ? (
+					<AddBooks
+						switchBar={this.switchBar}
+						updateTitle={this.updateTitle}
+						updateAuthor={this.updateAuthor}
+						submitAddForm={this.submitAddForm}
+					/>
+				) : (
+					<SearchBar
+						switchBar={this.switchBar}
+						preventFormDefault={this.preventFormDefault}
+						search={this.search}
+					/>
+				)}
 				{this.state.showBooks.map(({id, title, author}) => (
 					<BookListAppTitle
 						key={id}
